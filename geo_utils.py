@@ -83,6 +83,8 @@ class Regionalizador:
         if arrumar_projecao:
             self.projecao_lat_long(geodf)
 
+        geodf.set_index(geodf['sp_nome'],inplace=True)
+
         return geodf
 
     def coluna_percentual_regional(self, geodf, dados_regionais, col_name = "Percentual"):
