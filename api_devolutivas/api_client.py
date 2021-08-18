@@ -1,4 +1,5 @@
 #cliente API devolutivas
+from geo_utils import Regionalizador
 import random
 import time
 import requests
@@ -118,13 +119,18 @@ class ClientDevolutivas:
         cache = self.cache.get(search_data, offset)
         if cache:
             print(f'Busca {search_data} cacheada')
+            if cache=='FimDaBusca':
+                raise ResultadoVazio(f'Busca {search_data} toda em cache')
             return cache
         
         else:
-            data = self.post_pesquisar(search_data, offset)
-            self.cache.add(data, search_data, offset)
-            
-            return data
+            try:
+                data = self.post_pesquisar(search_data, offset)
+                return data
+            except ResultadoVazio as e:
+                self.cache.add('FimDaBusca', search_data, offset)
+                raise ResultadoVazio(e)
+                
         
     def solve_too_many_reqs(self, num_requisi, e):
         
@@ -151,9 +157,8 @@ class ClientDevolutivas:
                     contribs.append(data)
                 offset+=self.limite_linhas
             except ResultadoVazio as e:
-                #vai acontecer mesmo se estiver cacheada, porque: só vai sair do while quando
-                #retornar vazio (a API não diz quantos resultados a busca tem)
                 print(f'A busca para {tipo_obj}: {nome_obj} foi finalizada')
+                print(e)
                 break
             except MuitasRequisicoes as e:
                 self.solve_too_many_reqs(num_requisi, e)

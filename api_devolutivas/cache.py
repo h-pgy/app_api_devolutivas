@@ -13,9 +13,9 @@ class Cache:
         
         for tipo_obj, id_obj in search_data.items():
             dici_tipo = self.cache_dict.get(tipo_obj,{})
-            dici_objeto = dici_tipo.get(id_obj,{})
+            dici_objeto = dici_tipo.get(str(id_obj),{})
             
-            return dici_objeto.get(offset)
+            return dici_objeto.get(str(offset))
 
     def add(self, result_busca, search_data, offset):
         
