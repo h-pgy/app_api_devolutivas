@@ -91,8 +91,6 @@ class Regionalizador:
     
     def geodf_distrib_regional(self, geodf, api_data, cathegory_name, col_name="Percentual"):
         
-        geodf = geodf.copy()
-
         dados_regionais = self.contabilizar_subs(api_data, cathegory_name)
         self.coluna_percentual_regional(geodf, dados_regionais, col_name)
 
