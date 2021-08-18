@@ -44,6 +44,7 @@ app.title = 'Regionalização Devolutivas PDM 21-24'
 server = app.server
 
 app.layout = html.Div([
+    navbar,
     html.P("Tema:"),
     dcc.Dropdown(
         id='tema', 
