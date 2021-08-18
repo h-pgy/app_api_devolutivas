@@ -13,10 +13,10 @@ SHP_PATH = 'map_data/mapa_subprefeituras/SIRGAS_SHP_subprefeitura_polygon.shp'
 CACHE = Cache()
 API_CLIENT = ClientDevolutivas(cache=CACHE)
 REGIONALIZAR = Regionalizador(SHP_PATH)
+DADOS = API_CLIENT.get_all_contribs_by_type('categorias')
 
 def gerar_geodf(cathegory_name):
 
-    DADOS = API_CLIENT.get_all_contribs_by_type('categorias')
     geodf = REGIONALIZAR(DADOS, cathegory_name)
 
     return geodf
