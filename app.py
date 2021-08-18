@@ -14,7 +14,7 @@ CACHE = Cache()
 API_CLIENT = ClientDevolutivas(cache=CACHE)
 REGIONALIZAR = Regionalizador(SHP_PATH)
 DADOS = API_CLIENT.get_all_contribs_by_type('categorias')
-
+CACHE.save_cache_json()
 
 def gerar_geodf(cathegory_name):
 
