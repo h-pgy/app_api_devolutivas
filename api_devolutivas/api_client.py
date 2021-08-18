@@ -55,12 +55,19 @@ class ClientDevolutivas:
     def get_types(self, tipo):
         
         self.assert_tipos(tipo)
+        num_requisi=0
+        while True:
+            try:
+                with requests.get(self.root+tipo) as r:
+                    self.check_statuses(r)
+                    dados = r.json()
+                    return dados
+            except MuitasRequisicoes as e:
+                num_requisi+=1
+                self.solve_too_many_reqs(num_requisi, e)
+                return self.get_types(tipo)
             
-        with requests.get(self.root+tipo) as r:
-            self.check_statuses(r)
-            dados = r.json()
-            
-        return dados
+        
     
     def find_obj_id(self, tipo_obj, nome_obj):
         
