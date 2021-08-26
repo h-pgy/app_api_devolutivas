@@ -1,5 +1,4 @@
 #cliente API devolutivas
-from geo_utils import Regionalizador
 import random
 import time
 import requests
@@ -126,6 +125,7 @@ class ClientDevolutivas:
         else:
             try:
                 data = self.post_pesquisar(search_data, offset)
+                self.cache.add(data, search_data, offset)
                 return data
             except ResultadoVazio as e:
                 self.cache.add('FimDaBusca', search_data, offset)
